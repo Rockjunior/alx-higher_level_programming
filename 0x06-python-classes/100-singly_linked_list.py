@@ -1,23 +1,30 @@
 #!/usr/bin/python3
-"""A module of singly linked list using python.
 
-This module implements a basic singly list
+"""
+    Module 100-singly_linked_list
+    A class Node that defines a node of a singly linked list
+    A class that defines a singly linked list
 """
 
 
 class Node:
-    """The ``Node`` of singly linked list
+    """This class defines a node of a singly linked list
+
+    Methods:
+        __init__(self, data, next_node=None)
+
+    Attributes:
+        data: The node data
+        next_node: pointer to the next node
+
     """
     def __init__(self, data, next_node=None):
-        """Constructs ``Node`` object.
+        """Initialize the object / instance of the class
 
         Args:
-            data (`int`): The data of the ``Node``.
-            next_node (:obj:`Node`, optional): The next ``Node``.
+            data: The node's data
+            next_node: Pointer address to the next node
 
-        Raises:
-            TypeError: If ``data`` is not an integer.
-                If ``next_node`` is not a ``Node`` objet.
         """
         self.data = data
         self.next_node = next_node
@@ -25,76 +32,112 @@ class Node:
     @property
     def data(self):
         """
-        Args:
-            data (`int`): The data of the ``Node``.
+        getter method
 
-        Raises:
-            TypeError: If ``data`` is not an integer.
+        Return: the new data
+
         """
-        return self._Node__data
+        return self.__data
 
     @data.setter
-    def data(self, data):
-        if data and not isinstance(data, int):
+    def data(self, value):
+        """
+        setter method
+
+        Set the new value for the node's data
+
+        Raises:
+            TypeError: if data is not an integer
+
+        """
+        if type(value) != int:
             raise TypeError("data must be an integer")
         else:
-            self._Node__data = data
+            self.__data = value
 
     @property
     def next_node(self):
         """
-        Args:
-            data (`int`): The data of the ``Node``.
+        getter method
 
-        Raises:
-            TypeError: If ``data`` is not an integer.
+        Return: the pointer to the next node
+
         """
-
-        return self._Node__next_node
+        return self.__next_node
 
     @next_node.setter
-    def next_node(self, next_node):
-        if next_node and not isinstance(next_node, Node):
-            raise TypeError("next_node must be an integer")
+    def next_node(self, value):
+        """
+        setter method
+
+        Set the new value for the next node
+
+        Raises:
+            TypeError: if next_node is not equal to either Node or None
+
+        """
+        if type(value) is not Node and value is not None:
+            raise TypeError("next_node must be a Node object")
         else:
-            self._Node__next_node = next_node
+            self.__next_node = value
 
 
 class SinglyLinkedList:
-    """Definition of a ``singly linked list``.
+    """
+    Defines a singly linked list
+
+    Attributes:
+        head: Private
+
+    Methods:
+        __init__(self)
+        sorted_insert(self, value)
+
     """
     def __init__(self):
-        self.head = None
+        """
+        Initializes the object / instance of the class
+
+        Attributes:
+            head: Private
+
+        """
+        self.__head = None
 
     def __str__(self):
-        res = ""
-        tmp = self.head
-        while tmp.next_node is not None:
-            res += str(tmp.data)
-            tmp = tmp.next_node
-            if tmp.next_node is not None:
-                res += "\n"
-        return res
+        """
+        String representation of of singly linked list
+        """
+        string = ""
+        temp = self.__head
+        while temp is not None:
+            string += str(temp.data)
+            temp = temp.next_node
+            if temp is not None:
+                string += "\n"
+        return string
 
     def sorted_insert(self, value):
-        """Inserts in a sorted ``singly linked list``
+        """
+        Inserts new nodes into the singly linked list in a sorted order
 
         Args:
-            value (`int`): The value to insert.
+            value: the integer data for node
+
         """
-        try:
-            new_node = Node(value)
-        except Exception:
+        new = Node(value)
+        if self.__head is None:
+            self.__head = new
             return
-        if not self.head:
-            self.head = new_node
-        else:
-            tmp = self.head
-            while value > tmp.data and tmp.next_node is not None:
-                prev = tmp
-                tmp = tmp.next_node
-            new_node.next_node = tmp
-            if tmp == self.head:
-                self.head = new_node
-            else:
-                prev.next_node = new_node
+
+        temp = self.__head
+        if new.data < temp.data:
+            new.next_node = self.__head
+            self.__head = new
+            return
+
+        while temp.next_node is not None and new.data > temp.next_node.data:
+            temp = temp.next_node
+        new.next_node = temp.next_node
+        temp.next_node = new
+        return
