@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # 2-square.py
-# festus sulumeti
+
 """Size validation: """
 
 
