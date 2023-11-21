@@ -1,11 +1,26 @@
 #!/usr/bin/python3
-# 1-square.py
+"""
+    Module 1-square
+    It defines a square by private instance attribute
+
+"""
 
 
-"""Private instance attribute: """
+class Square:
+    """This defines a square by private attribute
 
-class Square(object):
-    """class variable size"""
+        Attributes:
+            size: The size of the square
+
+    """
+
     def __init__(self, size):
-        """initialize size"""
+        """
+        This initializes the instance / object with
+        size (no type / value verification)
+
+        Args:
+            size: The size of the square
+
+        """
         self.__size = size
